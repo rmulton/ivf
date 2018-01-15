@@ -1,0 +1,19 @@
+MODULE main
+VAR
+    state : {ab, nab, anb, nanb};
+INIT
+    state = anb;
+TRANS
+    case
+        state = anb : state in {nanb, ab, nab};
+        state = nanb : state in {nab};
+        state = ab : state in {anb};
+        state = nab : state in {nab};
+    esac;
+DEFINE
+    a := (state = ab | state = anb);
+    b := (state = ab | state = nab);
+
+SPEC AG(a = FALSE -> AF(a = FALSE & b = TRUE));
+SPEC AG(a = FALSE -> AF(a = FALSE));
+SPEC AG((a = FALSE & b = TRUE) -> AG(a = FALSE & b = TRUE));

@@ -1,0 +1,23 @@
+MODULE main
+VAR
+    a : boolean;
+    b : boolean;
+ASSIGN
+    init(a) := TRUE;
+    init(b) := FALSE;
+    next(a) := case
+        a = TRUE & b = FALSE : {TRUE, FALSE};
+        a = FALSE & b = FALSE : FALSE;
+        a = TRUE & b = TRUE : TRUE;
+        a = FALSE & b = TRUE : FALSE;
+    esac;
+    next(b) := case
+        a = TRUE & b = FALSE & next(a) = TRUE : TRUE;
+        a = TRUE & b = FALSE & next(a) = FALSE : {TRUE, FALSE};
+        a = FALSE & b = FALSE : TRUE;
+        a = TRUE & b = TRUE : FALSE;
+        a = FALSE & b = TRUE : TRUE;
+    esac;
+SPEC AG(a = FALSE -> AF(a = FALSE & b = TRUE));
+SPEC AG(a = FALSE -> AF(a = FALSE));
+SPEC AG((a = FALSE & b = TRUE) -> AG(a = FALSE & b = TRUE));
