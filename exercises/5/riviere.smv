@@ -1,0 +1,39 @@
+MODULE main
+VAR
+    state : {lgmgsgfg, ldmgsgfd, lgmdsgfd, lgmgsdfd, lgmdsdfd, lgmgsdfg, lgmdsgfg, ldmgsdfd, ldmdsgfd, ldmgsgfg, ldmdsdfd};
+ASSIGN
+    init(state) := lgmgsgfg;
+
+    next(state) := case
+        state = lgmgsgfg : {ldmgsgfd, lgmdsgfd, lgmgsdfd, lgmdsdfd};
+        state = ldmgsgfd | state = lgmdsgfd | state = lgmgsdfd : lgmgsgfg;
+        state = lgmdsdfd : {lgmgsdfg, lgmdsgfg};
+        state = lgmgsdfg : {lgmdsdfd, ldmgsdfd};
+        state = lgmdsgfg : {lgmdsdfd, ldmdsgfd};
+        state = ldmgsdfd : {lgmgsdfd, ldmgsgfg};
+        state = ldmdsgfd : {lgmdsgfg, ldmgsgfg};
+        state = ldmgsgfg : {ldmgsdfd, ldmdsgfd, ldmdsdfd};
+        state = ldmdsdfd : ldmdsdfd;
+        esac;
+
+DEFINE
+    l := case
+        state = lgmgsgfg | state = lgmdsgfd | state = lgmgsdfd | state = lgmdsdfd | state = lgmgsdfg | state = lgmdsgfg : FALSE;
+        state = ldmgsgfd | state = ldmgsdfd | state = ldmdsgfd | state = ldmgsgfg | state = ldmdsdfd : TRUE;
+    esac;
+    m := case
+        state = lgmgsgfg | state = ldmgsgfd | state = lgmgsdfd | state = ldmgsdfd | state = lgmgsdfg | state = ldmgsgfg : FALSE;
+        state = lgmdsdfd | state = lgmdsgfd | state = ldmdsgfd | state = ldmdsdfd | state = lgmdsgfg : TRUE;
+    esac;
+    s := case
+        state = lgmgsgfg | state = lgmdsgfd | state = ldmdsgfd | state = lgmdsgfg | state = ldmgsgfg | state = ldmgsgfd : FALSE;
+        state = lgmgsdfd | state = lgmdsdfd | state = ldmgsdfd | state = ldmdsdfd | state = lgmgsdfg : TRUE;
+    esac;
+    f := case
+        state = lgmgsgfg | state = lgmdsgfg | state = lgmgsdfg | state = ldmgsgfg : FALSE;
+        state = lgmgsdfd | state = lgmdsgfd | state = ldmdsgfd | state = lgmdsdfd | state = ldmgsdfd | state = ldmdsdfd | state = ldmgsgfd : TRUE;
+    esac;
+
+SPEC !EF(l = FALSE & m = FALSE & AX(l = TRUE & m = TRUE));
+SPEC !EF(l = FALSE & s = FALSE & AX(l = TRUE & s = TRUE));
+SPEC EF(l = TRUE & m = TRUE & s = TRUE & f = TRUE);
