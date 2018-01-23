@@ -34,6 +34,4 @@ DEFINE
         state = lgmgsdfd | state = lgmdsgfd | state = ldmdsgfd | state = lgmdsdfd | state = ldmgsdfd | state = ldmdsdfd | state = ldmgsgfd : TRUE;
     esac;
 
-SPEC !EF(l = FALSE & m = FALSE & AX(l = TRUE & m = TRUE));
-SPEC !EF(l = FALSE & s = FALSE & AX(l = TRUE & s = TRUE));
-SPEC EF(l = TRUE & m = TRUE & s = TRUE & f = TRUE);
+SPEC !EF(l = FALSE & m = FALSE & AX(l = TRUE & m = TRUE)) & !EF(l = FALSE & s = FALSE & AX(l = TRUE & s = TRUE)) & EF(l = TRUE & m = TRUE & s = TRUE & f = TRUE);
