@@ -1,0 +1,11 @@
+MODULE main
+VAR
+    phi : boolean;
+ASSIGN
+    init(phi) := TRUE;
+
+    next(phi) := case
+        phi = TRUE : FALSE;
+        phi = FALSE : FALSE;
+    esac;
+SPEC EF(!phi) <-> !AF(phi);

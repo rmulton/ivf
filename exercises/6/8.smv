@@ -1,0 +1,13 @@
+MODULE main
+VAR
+    phi : boolean;
+    psi : boolean;
+ASSIGN
+    init(phi) := TRUE;
+
+    next(phi) := case
+        phi = TRUE : {TRUE, FALSE};
+        phi = FALSE : TRUE;
+    esac;
+    
+SPEC TRUE <-> (EG(phi)->AG(phi));
