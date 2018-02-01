@@ -1,0 +1,77 @@
+MODULE main
+VAR
+    asc_b : 0..3;
+    asc_p : 1..3;
+    et1 : boolean;
+    et2 : boolean;
+    et3 : boolean;
+
+ASSIGN
+    next(asc_p):= case
+        -- Uniquement appel de l'ascenseur
+        
+        asc_b = 0 & et1=TRUE & et2=TRUE & et3=TRUE: 1;
+        
+        asc_b = 0 & et1=TRUE & et2=FALSE & et3=FALSE: 1;
+        asc_b = 0 & et1=TRUE & et2=TRUE & et3=FALSE: 1;
+        asc_b = 0 & et1=TRUE & et2=FALSE & et3=TRUE: 3;
+        
+        asc_b = 0 & et1=FALSE & et2=TRUE & et3=FALSE: 2;
+        asc_b = 0 & et1=FALSE & et2=TRUE & et3=TRUE: 2;
+        asc_b = 0 & et1=FALSE & et2=TRUE & et3=TRUE: 2;
+        asc_b = 0 & et1=FALSE & et2=FALSE & et3=TRUE: 3;
+        
+        asc_b = 0 & et1=FALSE & et2=FALSE & et3=FALSE: asc_p;
+        -- Utilisation du bouton dans l'ascenseur
+        asc_b != 0 & asc_p!=asc_b : asc_b;
+        
+        asc_b != 0 & asc_p=asc_b & et1=FALSE & et2 = FALSE & et3 = FALSE: asc_p;
+        
+        asc_b != 0 & asc_p=asc_b & et1=TRUE & et3=FALSE: 1;
+        asc_b != 0 & asc_p=asc_b & et1=TRUE & et3=TRUE: 3;
+        asc_b != 0 & asc_p=asc_b & et1=FALSE & et2 = TRUE: 2;
+        asc_b != 0 & asc_p=asc_b & et1=FALSE & et2 = FALSE & et3 = TRUE: 3;
+        
+        asc_b != 0 & asc_p=asc_b & et2=TRUE & et1=FALSE: 2;
+        asc_b != 0 & asc_p=asc_b & et2=TRUE & et1=TRUE: 1;
+        asc_b != 0 & asc_p=asc_b & et2=FALSE & et3 = TRUE: 3;
+        asc_b != 0 & asc_p=asc_b & et2=FALSE & et3 = FALSE & et1 = TRUE: 1;
+
+        asc_b != 0 & asc_p=asc_b & et3=TRUE & et2=FALSE: 3;
+        asc_b != 0 & asc_p=asc_b & et3=TRUE & et2=TRUE: 2;
+        asc_b != 0 & asc_p=asc_b & et3=FALSE & et1 = TRUE: 1;
+        asc_b != 0 & asc_p=asc_b & et3=FALSE & et1 = FALSE & et2 = TRUE: 2;
+
+        esac;
+
+    next(asc_b):= case
+        asc_b = 0 & asc_p = 1 : {2,3};
+        asc_b = 0 & asc_p = 2 : {1,3};
+        asc_b = 0 & asc_p = 3 : {1,2};
+        asc_b != 0 : 0;
+        esac;
+    
+    next(et1):= case 
+        asc_p = 1 : FALSE;
+        asc_p !=1 & et1 = TRUE : TRUE;
+        asc_p !=1 & et1 = FALSE : {TRUE, FALSE};
+        esac;
+        
+    next(et2):= case 
+        asc_p = 2 : FALSE;
+        asc_p !=2 & et2 = TRUE : TRUE;
+        asc_p !=2 & et2 = FALSE : {TRUE, FALSE};
+        esac;
+
+    next(et3):= case 
+        asc_p = 3 : FALSE;
+        asc_p !=3 & et3 = TRUE : TRUE;
+        asc_p !=3 & et3 = FALSE : {TRUE, FALSE};
+        esac;
+        
+LTLSPEC et1 -> F(asc_p=1)
+LTLSPEC et2 -> F(asc_p=2)
+LTLSPEC et3 -> F(asc_p=3)
+LTLSPEC (asc_b=1 & asc_p != 1) -> X(asc_p=1)
+LTLSPEC (asc_b=2 & asc_p != 2) -> X(asc_p=2)
+LTLSPEC (asc_b=3 & asc_p != 3) -> X(asc_p=3)
