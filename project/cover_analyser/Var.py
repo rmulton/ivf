@@ -1,4 +1,3 @@
 class Var:
-    def __init__(self, name):
-        self.name = name
-        self.value = None
+    def __init__(self, value=None, const=False):
+        self.value = value

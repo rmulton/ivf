@@ -10,8 +10,8 @@ class Program:
 
     # Initiate the variables
     def _initiate_variables(self, init_values):
-        for variable in self.variables:
-            variable.value = init_values[variable.name]
+        for variable_name, variable in self.variables.items():
+            variable.value = init_values[variable_name]
 
     # Used for TA criterium
     def get_assign_labels(self):
@@ -33,21 +33,23 @@ class Program:
     def get_i_while_loops(self, i):
         return
 
-    def get_path(self,initial_value):
-        #Initiate variables
+    def get_path(self, initial_value):
+        # Initiate variables
         self._initiate_variables(initial_value)
-        #Initialize browsing
+        # Initialize browsing
         node = self.initial_node
         path = []
         while node not in self.final_nodes:
-            #Edges coming out from actual node
+            # Edges coming out from actual node
             edges = self.program_graph.out_edges(node)
             for edge in edges:
-                attr_dic = self.program_graph.get_edge_data(edge[0], edge[1])
-                if attr_dic['expr']:
-                    attr_dic['instr'].run()
+                data = self.program_graph.get_edge_data(edge[0], edge[1])
+                attr_dict = data["attr_dict"]
+                if attr_dict['expr'].result():
+                    attr_dict['instr'].run()
                     path += [node,edge]
                     node = edge[1]
+                    break
         path.append(node)
         return path
 
