@@ -46,8 +46,10 @@ def create_test_program():
     pgm = Program(pgm, variables)
     return pgm
 
-pgm = create_test_program()
+if __name__=="__main__":
+    # Create the program that we are going to test
+    pgm = create_test_program()
 
-td_test = tests.TD()
-td_test_set = [{"x": 0}]
-td_test.test(td_test_set, pgm)
+    # Test the TD criterium
+    td_test_set = [{"x": 0}]
+    tests.test_td(td_test_set, pgm)

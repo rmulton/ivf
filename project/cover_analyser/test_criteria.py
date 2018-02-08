@@ -1,5 +1,12 @@
 from networkx.classes.reportviews import OutEdgeView
 
+def test_td(test_set, program):
+    """
+    Wrapper function for TD.test(test_set, program)
+    """
+    tester = TD()
+    tester.test(test_set, program)
+
 class TA:
     def __init__(self):
         return
