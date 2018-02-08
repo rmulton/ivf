@@ -2,10 +2,10 @@ from cover_analyser.instructions import Assign
 
 
 class Program:
-    def __init__(self, program_graph, variables, initial_nodes=[1], final_nodes=["_"]):
+    def __init__(self, program_graph, variables, initial_node=1, final_nodes=["_"]):
         self.program_graph = program_graph
         self.variables = variables
-        self.initial_nodes = initial_nodes
+        self.initial_node = initial_node
         self.final_nodes = final_nodes
 
     # Initiate the variables
@@ -34,6 +34,23 @@ class Program:
         return
 
     def get_path(self,initial_value):
+        #Initiate variables
+        self._initiate_variables(initial_value)
+        #Initialize browsing
+        node = self.initial_node
+        path = []
+        while node not in self.final_nodes:
+            #Edges coming out from actual node
+            edges = self.program_graph.out_edges(node)
+            for edge in edges:
+                attr_dic = self.program_graph.get_edge_data(edge[0], edge[1])
+                if attr_dic['expr']:
+                    attr_dic['instr'].run()
+                    path += [node,edge]
+                    node = edge[1]
+        path += [node,(node,"_")]
+        return path
+
         
 
 
