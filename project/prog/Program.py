@@ -1,3 +1,6 @@
+from cover_analyser.instructions import Assign
+
+
 class Program:
     def __init__(self, program_graph, variables, initial_nodes=[1], final_nodes=["_"]):
         self.program_graph = program_graph
@@ -12,7 +15,11 @@ class Program:
 
     # Used for TA criterium
     def get_assign_labels(self):
-        return
+        assign_labels = []
+        for edge, attr_dic in self.program_graph.edges.items():
+            if isinstance(attr_dic['instr'],Assign):
+                assign_labels += [edge]
+        return assign_labels
     
     # Used for TD
     def get_if_while_edges(self):
@@ -25,5 +32,10 @@ class Program:
     # Used for I_TB
     def get_i_while_loops(self, i):
         return
+
+    def get_path(self,initial_value):
+        
+
+
     
     # TODO: TU, TDU, TC
