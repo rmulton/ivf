@@ -48,7 +48,7 @@ class Program:
                     attr_dic['instr'].run()
                     path += [node,edge]
                     node = edge[1]
-        path += [node,(node,"_")]
+        path.append(node)
         return path
 
         
