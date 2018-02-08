@@ -12,6 +12,7 @@ import prog.node as node
 
 pgm = nx.DiGraph()
 x = Var("x")
+variables = [x]
 
 # Programme exemple du sujet
 pgm.add_node(1, attr_dict={"operation":node.If()})
@@ -36,8 +37,6 @@ pgm.add_node("_", attr_dict={"operation":node.End()})
 pgm.add_edge(5, "_", attr_dict={"expr": boolean.Always(), "instr": instructions.Assign(x, 1)})
 pgm.add_edge(6, "_", attr_dict={"expr": boolean.Always(), "instr": instructions.Assign(x, arithmetic.Add(x, 1))})
 
-print(pgm.edges, pgm.nodes)
-
-pgm = Program(pgm)
+pgm = Program(pgm, variables)
 
 print(pgm)
