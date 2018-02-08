@@ -4,7 +4,12 @@ class Program:
         self.variables = variables
         self.initial_nodes = initial_nodes
         self.final_nodes = final_nodes
-    
+
+    # Initiate the variables
+    def _initiate_variables(self, init_values):
+        for variable in self.variables:
+            variable.value = init_values[variable.name]
+
     # Used for TA criterium
     def get_assign_labels(self):
         return
