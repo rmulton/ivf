@@ -1,4 +1,4 @@
-import networkx as nx
+from networkx.classes.reportviews import OutEdgeView
 
 class TA:
     def __init__(self):
@@ -23,16 +23,16 @@ class TD:
             path = program.get_path(test)
             for node_or_edge in path:
                 # If it is a node
-                if isinstance(node_or_edge, nx.OutEdgeView):
+                if isinstance(node_or_edge, OutEdgeView):
                     edge = node_or_edge
                     # If the edge is in the if_while_edges list, it can be removed
                     if edge in if_while_edges:
                         if_while_edges.remove(edge)
         # If the list of edges is empty, the test pass, otherwise it doesn't.
         if len(if_while_edges)==0:
-            return True
+            print("Test TD passed.")
         else:
-            return False
+            print("Test TD didn't pass. Some if or while edges are not visited: {}".format(if_while_edges))
 
 class K_TC:
     def __init__(self, k):

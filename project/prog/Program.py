@@ -1,5 +1,4 @@
-from cover_analyser.instructions import Assign
-
+from cover_analyser.instructions import Assign, If, While
 
 class Program:
     def __init__(self, program_graph, variables, initial_node=1, final_nodes=["_"]):
@@ -23,7 +22,12 @@ class Program:
     
     # Used for TD
     def get_if_while_edges(self):
-        return
+        if_while_edges = list()
+        for edge, data in self.program_graph.edges.items():
+            attr_dict = data["attr_dict"]
+            if isinstance(attr_dict["instr"], If) or isinstance(attr_dict["instr"], While):
+                if_while_edges.append(edge)
+        return if_while_edges
     
     # Used for K_TC
     def get_k_paths(self, k):

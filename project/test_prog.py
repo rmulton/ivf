@@ -41,18 +41,13 @@ def create_test_program():
     pgm.add_node("_", attr_dict={"operation":node.End()})
     pgm.add_edge(5, "_", attr_dict={"expr": boolean.Always(), "instr": instructions.Assign(x, Var(value=1))})
     pgm.add_edge(6, "_", attr_dict={"expr": boolean.Always(), "instr": instructions.Assign(x, arithmetic.Add(x, Var(value=1)))})
+
     # Get the program from the program graph
     pgm = Program(pgm, variables)
     return pgm
 
 pgm = create_test_program()
-path = pgm.get_path({"x": 0})
-print("0", path)
-path = pgm.get_path({"x": 5})
-print("5", path)
-path = pgm.get_path({"x": -1})
-print("-1", path)
 
-# td_test = tests.TD()
-# td_test_set = {"x": 0}
-# td_test.test(td_test_set, pgm)
+td_test = tests.TD()
+td_test_set = [{"x": 0}]
+td_test.test(td_test_set, pgm)
