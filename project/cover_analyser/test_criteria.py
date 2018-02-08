@@ -1,17 +1,35 @@
+import networkx as nx
+
 class TA:
     def __init__(self):
         return
     def test(self, test_set, program):
-        pro
-        return
+        assign_labels = program.get_assign_labels()
+        # Stuff
+        if len(assign_labels)==0:
+            return True
+        else:
+            return False
 
 class TD:
     def __init__(self):
         return
     def test(self, test_set, program):
-        assign_labels = program.get_assign_label()
-        # Stuff
-        if len(assign_labels)==0:
+        # Get the nodes with if or while labels
+        if_while_edges = set(program.get_if_while_edges())
+        # Run the program for all the test set, and remove labels of visited nodes
+        for test in test_set:
+            # Get te path for 
+            path = program.get_path(test)
+            for node_or_edge in path:
+                # If it is a node
+                if isinstance(node_or_edge, nx.OutEdgeView):
+                    edge = node_or_edge
+                    # If the edge is in the if_while_edges list, it can be removed
+                    if edge in if_while_edges:
+                        if_while_edges.remove(edge)
+        # If the list of edges is empty, the test pass, otherwise it doesn't.
+        if len(if_while_edges)==0:
             return True
         else:
             return False
