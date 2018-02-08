@@ -10,10 +10,10 @@ x = arithmetic.Var()
 pgm.add_node(1, attr_dict={"type":"IF"})
 
 pgm.add_node(2, attr_dict={"type":"TRUE"})
-pgm.add_edge(1, 2, attr_dict={"expr": boolean.InfOrEqual(X, 0), "instr": instructions.Skip()})
+pgm.add_edge(1, 2, attr_dict={"expr": boolean.InfOrEqual(x, 0), "instr": instructions.Skip()})
 
 pgm.add_node(3, attr_dict={"type":"TRUE"})
-pgm.add_edge(1, 3, attr_dict={"expr": boolean.InfOrEqual(X, 0, no=True), "instr": instructions.Skip()})
+pgm.add_edge(1, 3, attr_dict={"expr": boolean.InfOrEqual(x, 0, no=True), "instr": instructions.Skip()})
 
 pgm.add_node(4, attr_dict={"type":"IF"})
 pgm.add_edge(2, 4, attr_dict={"expr": boolean.Always(), "instr": instructions.Assign(x, expressions.Min(0, x))})
