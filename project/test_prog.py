@@ -6,6 +6,7 @@ import cover_analyser.expressions.boolean as boolean
 import cover_analyser.expressions.arithmetic as arithmetic
 import cover_analyser.instructions as instructions
 from cover_analyser.Var import Var
+from prog.Program import Program
 
 import prog.node as node
 
@@ -36,3 +37,7 @@ pgm.add_edge(5, "_", attr_dict={"expr": boolean.Always(), "instr": instructions.
 pgm.add_edge(6, "_", attr_dict={"expr": boolean.Always(), "instr": instructions.Assign(x, arithmetic.Add(x, 1))})
 
 print(pgm.edges, pgm.nodes)
+
+pgm = Program(pgm)
+
+print(pgm)
