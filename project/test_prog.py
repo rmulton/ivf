@@ -6,10 +6,10 @@ import cover_analyser.expressions.boolean as boolean
 import cover_analyser.expressions.arithmetic as arithmetic
 import cover_analyser.instructions as instructions
 from cover_analyser.Var import Var
-from prog.Program import Program
+from program.Program import Program
 import cover_analyser.test_criteria as tests
 
-import prog.node as node
+import program.node as node
 
 def create_test_program():
     # Create the variables
