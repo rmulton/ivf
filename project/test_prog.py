@@ -4,6 +4,8 @@ import program.examples as examples
 if __name__=="__main__":
     # Create the program that we are going to test
     pgm = examples.create_test_program1()
+    pgm_while = examples.create_test_program2()
+    pgm_while_2 = examples.create_test_program3()
 
     # Test the TA criterion
     ta_test_set = [{"x": 0},{"x": -1},{"x": 1}]
@@ -18,9 +20,9 @@ if __name__=="__main__":
     tests.test_ktc(ktc_test_set, pgm, 2)
 
     # Test the ITB criterium
-    pgm_while = examples.create_test_program2()
     itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
     tests.test_itb(itb_tests_set,pgm_while,1)
+    tests.test_itb(itb_tests_set, pgm_while_2 ,1)
 
     # Test the TDef criterium
     test_set = [{"x": 0}, {"x": 5}, {"x": -1}]

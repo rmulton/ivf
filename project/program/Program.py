@@ -103,15 +103,16 @@ class Program:
         for i, edge in enumerate(path):
             loop_loc = 0
             i_loc = i
-            if i < (len(path)-1) and edge[0] == path[i+1][1] and edge[1] == path[i+1][0]:
-                loop_loc += 1
-                i_loc += 2
-                while path[i_loc][0] == path[i_loc+1][1] and path[i_loc][1] == path[i_loc+1][0] and \
-                                path[i_loc-1][0] == path[i_loc][1] and path[i_loc-1][1] == path[i_loc][0]:
+            if i < (len(path)-1):
+                if edge[0] == path[i+1][1] and edge[1] == path[i+1][0]:
                     loop_loc += 1
                     i_loc += 2
-                if loop_loc > loops:
-                    loops = loop_loc
+                    while path[i_loc][0] == path[i_loc+1][1] and path[i_loc][1] == path[i_loc+1][0] and \
+                                    path[i_loc-1][0] == path[i_loc][1] and path[i_loc-1][1] == path[i_loc][0]:
+                        loop_loc += 1
+                        i_loc += 2
+                    if loop_loc > loops:
+                        loops = loop_loc
         return loops
 
 
