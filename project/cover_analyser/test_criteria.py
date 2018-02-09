@@ -65,8 +65,10 @@ def test_tc(test_set, program):
     tester.test(test_set, program)
     return
 
-
 class TA:
+    """
+    Implements the All Affections criterium
+    """
     def __init__(self):
         return
     def test(self, test_set, program):
@@ -91,6 +93,9 @@ class TA:
             print("Test TA didn't pass. Some assign edges are not visited: {}".format(assign_labels))
 
 class TD:
+    """
+    Implements the All Decisions criterium
+    """
     def __init__(self):
         return
     def test(self, test_set, program):
@@ -111,6 +116,9 @@ class TD:
             print("Test TD didn't pass. Some if or while edges are not visited: {}".format(if_while_edges))
 
 class K_TC:
+    """
+    Implements the All k-paths criterium
+    """
     def __init__(self, k):
         self.k = k
         return
@@ -134,6 +142,9 @@ class K_TC:
 
 #Only implemented for i =1
 class I_TB:
+    """
+    Implements the All i-loops criterium
+    """
     def __init__(self, i):
         self.i = i
 
@@ -152,6 +163,9 @@ class I_TB:
             print("Test I_TB for i=1 didn't pass. Some paths are not visited: {}".format(while_loops))
 
 class TDef:
+    """
+    Implements the All Definitions criterium
+    """
     def __init__(self):
         return
     def test(self, test_set, program):
@@ -185,6 +199,9 @@ class TDef:
             print("Test TDef didn't pass. Some variables {} are not used on edges: {}".format(assignation_edges.keys(), assignation_edges))
 
 class TU:
+    """
+    Implements the All Use criterium
+    """
     def __init__(self):
         pass
     def test(self, test_set, program):
@@ -206,6 +223,9 @@ class TU:
 
 
 class TDU:
+    """
+    Implements the All DU-paths criterium
+    """
     def __init__(self):
         return
     def test(self, test_set, program):
@@ -223,6 +243,9 @@ class TDU:
             print("Test TDU didn't pass. Some paths are not visited: {}".format(tdu_paths))
 
 class TC:
+    """
+    Implements the All conditions criterium
+    """
     def __init__(self):
         return
     def test(self, test_set, program):
