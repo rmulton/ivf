@@ -66,7 +66,7 @@ class Program:
         # Initialize browsing
         node = self.initial_node
         path = []
-        while node not in self.final_nodes:
+        while node not in self.final_nodes: 
             # Edges coming out from actual node
             edges = self.program_graph.out_edges(node)
             for edge in edges:
