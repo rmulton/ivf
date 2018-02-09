@@ -31,6 +31,8 @@ class Equal:
         if isinstance(self.var2, Var):
             variables.append(self.var2)
         return variables
+    def conditions(self):
+        return [self]
 
 class InfOrEqual:
     """
@@ -65,6 +67,8 @@ class InfOrEqual:
         if isinstance(self.var2, Var):
             variables.append(self.var2)
         return variables
+    def conditions(self):
+        return [self]
 
 class And:
     """
@@ -78,6 +82,8 @@ class And:
         return (self.bool1.result() and self.bool2.result())
     def variables(self):
         return self.bool1.variables() + self.bool2.variables()
+    def conditions(self):
+        return self.bool1.conditions() + self.bool2.conditions()
 
 class Or:
     """
@@ -92,6 +98,8 @@ class Or:
         return (self.bool1.result() or self.bool2.result())
     def variables(self):
         return self.bool1.variables() + self.bool2.variables()
+    def conditions(self):
+        return self.bool1.conditions() + self.bool2.conditions()
 
 class Always:
     """
@@ -104,4 +112,7 @@ class Always:
         return True
     
     def variables(self):
+        return list()
+    
+    def conditions(self):
         return list()

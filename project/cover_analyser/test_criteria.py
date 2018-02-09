@@ -225,6 +225,18 @@ class TDU:
 class TC:
     def __init__(self):
         return
-    def test(self, test_set, program_graph):
-        return
-
+    def test(self, test_set, program):
+        # Get all the conditons in the graph
+        conditions = program.get_conditions()
+        for test in test_set:
+            # Get the path for the test
+            path = program.get_path(test)
+            for edge in path:
+                decision = program.program_graph.get_edge_data(*edge)["attr_dict"]["expr"]
+                for edge_cond in decision.conditions():
+                    if edge_cond in conditions:
+                        conditions.remove(edge_cond)
+        if len(conditions) == 0:
+            print("Test TC passed")
+        else:
+            print("Test TC didn't pass. Some conditions are not satisfied by any test provided: {}".format(tdu_paths)) 

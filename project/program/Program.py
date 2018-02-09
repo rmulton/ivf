@@ -1,4 +1,4 @@
-from cover_analyser.instructions import Assign, If, While
+from cover_analyser.instructions import Assign, If
 from cover_analyser.expressions.boolean import InfOrEqual, Equal
 
 class Program:
@@ -31,7 +31,7 @@ class Program:
         if_while_edges = list()
         for edge, data in self.program_graph.edges.items():
             attr_dict = data["attr_dict"]
-            if isinstance(attr_dict["instr"], If) or isinstance(attr_dict["instr"], While):
+            if isinstance(attr_dict["instr"], If):
                 if_while_edges.append(edge)
         return if_while_edges
     
