@@ -50,6 +50,11 @@ if __name__=="__main__":
     # Create the program that we are going to test
     pgm = create_test_program()
 
-    # Test the TD criterium
+    # Test the TA criterion
+    ta_test_set = [{"x": 0},{"x": -1},{"x": 1}]
+    tests.test_ta(ta_test_set, pgm)
+
+
+    # Test the TD criterion
     td_test_set = [{"x": 0}]
     tests.test_td(td_test_set, pgm)

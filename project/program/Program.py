@@ -15,8 +15,9 @@ class Program:
     # Used for TA criterium
     def get_assign_labels(self):
         assign_labels = []
-        for edge, attr_dic in self.program_graph.edges.items():
-            if isinstance(attr_dic['instr'],Assign):
+        for edge, data in self.program_graph.edges.items():
+            attr_dict = data["attr_dict"]
+            if isinstance(attr_dict['instr'],Assign):
                 assign_labels += [edge]
         return assign_labels
     

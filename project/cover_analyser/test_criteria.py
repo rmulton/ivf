@@ -1,4 +1,13 @@
 from networkx.classes.reportviews import OutEdgeView
+from cover_analyser.instructions import Assign
+
+def test_ta(test_set, program):
+    """
+    Wrapper function for TA.test(test_set, program)
+    """
+    tester = TA()
+    tester.test(test_set, program)
+
 
 def test_td(test_set, program):
     """
@@ -11,12 +20,25 @@ class TA:
     def __init__(self):
         return
     def test(self, test_set, program):
+        #Get the assign edges
         assign_labels = program.get_assign_labels()
-        # Stuff
+        # Run the program for all the test set, and remove labels of visited nodes
+        for test in test_set:
+            # Get the path for the test
+            path = program.get_path(test)
+            for node_or_edge in path:
+                #Test if is an edge
+                if isinstance(node_or_edge,tuple):
+                    data = program.program_graph.get_edge_data(node_or_edge[0],node_or_edge[1])
+                    attr_dict = data['attr_dict']
+                    if isinstance(attr_dict['instr'],Assign):
+                        if node_or_edge in assign_labels:
+                            assign_labels.remove(node_or_edge)
+
         if len(assign_labels)==0:
-            return True
+            print("Test TA passed.")
         else:
-            return False
+            print("Test TA didn't pass. Some assign edges are not visited: {}".format(assign_labels))
 
 class TD:
     def __init__(self):
