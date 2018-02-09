@@ -33,10 +33,32 @@ class Program:
     # Used for K_TC
     def get_k_paths(self, k):
         return
-    
+
+
+    def get_1_while_loops(self):
+        l = [[1,(1,2),2,(2,4),4,(4,5),5,(5,"_"),"_"],[1,(1,2),2,(2,4),4,(4,6),6,(6,4),4,(4,5),5,(5,"_"),"_"],
+             [1,(1,3),3,(3,4),4,(4,5),5,(5,"_"),"_"]]
+        return l
+
     # Used for I_TB
-    def get_i_while_loops(self, i):
-        return
+    # def get_i_while_loops(self, i):
+    #     #Extracting while_loops
+    #     while_loops = []
+    #     for edge in self.program_graph.edges:
+    #         for edge2 in self.program_graph.edges:
+    #             if edge[0] == edge2[1] and edge[1] == edge2[0] and (edge[1],edge[0]) not in while_loops:
+    #                 while_loops.append(edge)
+    #     for edge in while_loops:
+    #         edges = self.program_graph.out_edges(edge[0])
+    #         for edg_out in edges:
+    #             if edg_out[1] == edge[1]:
+    #                 pass
+    #             else:
+    #                 data = self.program_graph.get_edge_data(edge[0], edge[1])
+    #                 attr_dict = data['attr_dict']
+
+
+
 
     def get_path(self, initial_value):
         # Initiate variables

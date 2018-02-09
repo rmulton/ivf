@@ -16,6 +16,13 @@ def test_td(test_set, program):
     tester = TD()
     tester.test(test_set, program)
 
+def test_itb(test_set, program):
+    """
+    Wrapper function for ITB.test(test_set, program)
+    """
+    tester = I_TB()
+    tester.test(test_set, program)
+
 class TA:
     def __init__(self):
         return
@@ -83,12 +90,24 @@ class K_TC:
         else:
             return False
 
+#Only implemented for i =1
 class I_TB:
-    def __init__(self, i):
+    def __init__(self, i=1):
         self.i = i
-        return
+
     def test(self, test_set, program):
-        return
+        while_loops_1 = program.get_1_while_loops()
+        for test in test_set:
+            # Get the path for the test
+            path = program.get_path(test)
+            if path in while_loops_1:
+                while_loops_1.remove(path)
+        if len(while_loops_1)==0:
+            print("Test I_TB for i=1 passed")
+        else:
+            print("Test I_TB for i=1 didn't pass. Some paths are not visited: {}".format(while_loops_1))
+
+
 
 class TDef:
     def __init__(self):
