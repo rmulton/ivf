@@ -1,0 +1,30 @@
+MODULE main
+VAR
+    i : 0..4;
+    state : array 0..4 of 0..7;
+ASSIGN
+    next(state[0]) := case
+        i = 0 & state[0] = state[4] : (state[0]+1) mod 3;
+        TRUE: state[0];
+        esac;
+    next(state[1]) := case
+        i = 1 & state[1] != state[0] : state[0];
+        TRUE: state[1];
+        esac;
+    next(state[2]) := case
+        i = 2 & state[2] != state[1] : state[1];
+        TRUE: state[2];
+        esac;
+    next(state[3]) := case
+        i = 3 & state[3] != state[2] : state[2];
+        TRUE: state[3];
+        esac;
+    next(state[4]) := case
+        i = 4 & state[4] != state[3] : state[3];
+        TRUE: state[4];
+        esac;
+    next(i) := (i + 1) mod 5;
+DEFINE
+    zeros := [0, 0, 0, 0, 0];
+LTLSPEC
+    F(state = zeros);
