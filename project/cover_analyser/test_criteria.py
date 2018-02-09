@@ -1,4 +1,5 @@
-from networkx.classes.reportviews import OutEdgeView
+
+import networkx as nx
 from cover_analyser.instructions import Assign
 
 def test_ta(test_set, program):
@@ -30,6 +31,11 @@ def test_itb(test_set, program):
     Wrapper function for ITB.test(test_set, program)
     """
     tester = I_TB()
+    tester.test(test_set, program)
+    return
+
+def test_tdef(test_set, program):
+    tester = TDef()
     tester.test(test_set, program)
     return
 
@@ -116,13 +122,29 @@ class I_TB:
         else:
             print("Test I_TB for i=1 didn't pass. Some paths are not visited: {}".format(while_loops_1))
 
-
-
 class TDef:
     def __init__(self):
         return
     def test(self, test_set, program):
-        return
+        # NB : is test_set useless ?
+        # On récupère les arrêtes sur lesquelles il y a une assignation
+        assignation_edges = program.get_assignation_edges()
+        for variable, edge in assignation_edges.items():
+            # On récupère le bout de l'arrête
+            starting_node = edge[1]
+            # On vérifie qu'il y a un noeud après starting_node utilisant la variable désignée par variable_name
+            descendants = nx.descendants(program.program_graph, starting_node)
+            for descendant in descendants:
+                for outedge in program.program_graph.outedge(descendant):
+                    edge_components = outedge.attr_dict["attr_dict"]
+                    instr = edge_components["instr"]
+                    expr = edge_components["expr"]
+                    if variable in instr.variables() + expr.variables():
+                        assignation_edges.remove(variable)
+        if len(assignation_edges)==0:
+            print("Test Tdef passed")
+        else:
+            print("Test TDef didn't pass. Some variables {} are not used on edges: {}".format(assignation_edges.keys(), assignation_edges))
 
 class TU:
     def __init__(self):

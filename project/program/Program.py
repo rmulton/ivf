@@ -130,6 +130,17 @@ class Program:
                     node = edge[1]
                     break
         return path
+    
+    def get_assignation_edges(self):
+        assignation_edges = dict()
+        for edge in self.program_graph.edges:
+            instr = self.program_graph.get_edge_data(*edge)["attr_dict"]["instr"]
+            vars = instr.variables()
+            if isinstance(instr, Assign) and len(vars)>0:
+                # TODO: Check that it should be var[0]
+                assignation_edges[vars[0]] = edge
+        return assignation_edges
+
 
     def get_utilisation_paths(self):
         result = []

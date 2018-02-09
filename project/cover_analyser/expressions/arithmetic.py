@@ -17,6 +17,14 @@ class Add:
             value2 = self.var2.value
         res = value1 + value2
         return Var(value=res)
+    def variables(self):
+        variables = list()
+        if isinstance(self.var1, Var):
+            variables.append(self.var1)
+        if isinstance(self.var2, Var):
+            variables.append(self.var2)
+        return variables
+
 
 class Min(Add):
     def __init__(self, var1, var2):
@@ -32,6 +40,13 @@ class Min(Add):
             value2 = self.var2.value
         res = value1 - value2
         return Var(value=res)
+    def variables(self):
+        variables = list()
+        if isinstance(self.var1, Var):
+            variables.append(self.var1)
+        if isinstance(self.var2, Var):
+            variables.append(self.var2)
+        return variables
 
 class Mult:
     def __init__(self, var1, var2):
@@ -50,3 +65,10 @@ class Mult:
 
         res = value1 * value2
         return Var(value=res)
+    def variables(self):
+        variables = list()
+        if isinstance(self.var1, Var):
+            variables.append(self.var1)
+        if isinstance(self.var2, Var):
+            variables.append(self.var2)
+        return variables

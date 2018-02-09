@@ -8,9 +8,14 @@ class Assign:
             value2 = self.var2.result().value
         else:
             value2 = self.var2.value
-
         self.var1.value = value2
-
+    def variables(self):
+        variables = list()
+        if isinstance(self.var1, Var):
+            variables.append(self.var1)
+        if isinstance(self.var2, Var):
+            variables.append(self.var2)
+        return variables
 
 class If:
     def __init__(self, condition, instruction_if, instruction_else):
@@ -23,7 +28,9 @@ class If:
             self.instruction_if.run()
         else :
             self.instruction_else.run()
-
+    
+    def variables(self):
+        return self.condition.variables() + self.instruction_if.variables() + self.instruction_else.variables()
 
 class Skip:
     def __init__(self):
@@ -32,6 +39,8 @@ class Skip:
     def run(self):
         pass
 
+    def variables(self):
+        return list()
 
 class While:
     def __init__(self, condition, instruction):
