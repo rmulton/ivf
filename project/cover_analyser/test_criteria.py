@@ -3,7 +3,7 @@ from cover_analyser.instructions import Assign
 
 def test_ta(test_set, program):
     """
-    Wrapper function for TA.test(test_set, program)
+    Wrapper function that instantiates a TA object and runs TA.test(test_set, program)
     """
     tester = TA()
     tester.test(test_set, program)
@@ -27,20 +27,23 @@ def test_ktc(test_set, program, k):
 
 def test_itb(test_set, program,i):
     """
-    Wrapper function for ITB.test(test_set, program)
+    Wrapper function that instantiates a TB(i) object and runs ITB.test(test_set, program)
     """
     tester = I_TB(i)
     tester.test(test_set, program)
     return
 
 def test_tdef(test_set, program):
+    """
+    Wrapper function that instantiates a TDef object and runs TDef.test(test_set, program)
+    """
     tester = TDef()
     tester.test(test_set, program)
     return
 
 def test_tu(test_set, program):
     """
-    Wrapper function for ITB.test(test_set, program)
+    Wrapper function that instantiate a TU object and runs TU.test(test_set, program)
     """
     tester = TU()
     tester.test(test_set, program)
@@ -51,6 +54,14 @@ def test_tdu(test_set, program):
     Wrapper function for ITB.test(test_set, program)
     """
     tester = TDU()
+    tester.test(test_set, program)
+    return
+
+def test_tc(test_set, program):
+    """
+    Wrapper function for ITB.test(test_set, program)
+    """
+    tester = TC()
     tester.test(test_set, program)
     return
 

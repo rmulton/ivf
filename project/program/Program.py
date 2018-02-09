@@ -2,6 +2,10 @@ from cover_analyser.instructions import Assign, If, While
 from cover_analyser.expressions.boolean import InfOrEqual, Equal
 
 class Program:
+    """
+    Represents a program that contains variables, a program graph, an initial node, and one or several final nodes
+    Contains methods that are usefull to test the 8 criteria required for this project
+    """
     def __init__(self, program_graph, variables, initial_node=1, final_nodes=["_"]):
         self.program_graph = program_graph
         self.variables = variables
@@ -183,6 +187,7 @@ class Program:
                 result += [path]
         return result
     
+    # Used for TC test
     def get_conditions(self):
         conditions = list()
         for edge in self.program_graph.edges:
