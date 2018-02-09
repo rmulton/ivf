@@ -12,6 +12,9 @@ import cover_analyser.test_criteria as tests
 import program.node as node
 
 def create_test_program1():
+    """"
+    This implements the graph presented in the note
+    """
     # Create the variables
     x = Var()
     variables = {"x":x}
@@ -47,6 +50,9 @@ def create_test_program1():
     return pgm
 
 def create_test_program2():
+    """"
+    This creates a new program based on the previous one but with a while loop
+    """
     # Create the variables
     x = Var()
     variables = {"x":x}

@@ -143,23 +143,29 @@ class Program:
 
 
     def get_utilisation_paths(self):
-        # returns path where there is a definition of X and a use of X with no redefinition between
-        # - > (path,edge of definition, edge of use)
+        # returns path where there is a definition of X and a use of X with no redefinition between the two
+        # (path,index of edge of definition in path, index of edge of use in path)
 
         result = []
         # Because of while loops, we have an infinity of paths. We decide to take paths where length < 20
         for k in range(20):
+            #Take only paths that finish
             paths = self.get_k_paths_finished(k)
+            #Browse those paths
             for path in paths:
                 for i, edge in enumerate(path):
                     data = self.program_graph.get_edge_data(edge[0], edge[1])
                     attr_dict = data["attr_dict"]
+                    #Definition is an assign or initial state
                     if isinstance(attr_dict['instr'],Assign) or i== 0:
+                        #Browsing the end of the path to look for an assign or a use of the variable
                         for j in range(i+1,len(path)):
                             data_temp = self.program_graph.get_edge_data(path[j][0], path[j][1])
                             attr_dict_temp = data_temp["attr_dict"]
+                            # There is another assign so we are not interested by this path
                             if isinstance(attr_dict_temp['instr'],Assign):
                                 break
+                            # There is a use of the variable so we take it
                             elif isinstance(attr_dict_temp['expr'],InfOrEqual) or isinstance(attr_dict_temp['expr'],Equal):
                                 if (path,i,j) not in result:
                                     result.append((path,i,j))
@@ -167,11 +173,12 @@ class Program:
         return result
 
     def get_DU_paths(self):
-        #get du paths from tu paths by checking length of while loops
+        #get du paths from tu_paths by checking length of while loops
         result = []
         paths = self.get_utilisation_paths()
         for path,i,j in paths:
             path_temp = path[i:j]
+            # If there is no while loop longer than 1 between then we consider the path
             if self.while_loops_in_path(path_temp)<=1 and path not in result:
                 result += [path]
         return result

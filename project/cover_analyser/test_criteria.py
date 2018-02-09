@@ -127,7 +127,9 @@ class I_TB:
         self.i = i
 
     def test(self, test_set, program):
+        #get all paths with a while loop of length i
         while_loops = program.get_i_while_loops(self.i)
+        #Browse test_set
         for test in test_set:
             # Get the path for the test
             path = program.get_path(test)
@@ -175,7 +177,9 @@ class TU:
     def __init__(self):
         pass
     def test(self, test_set, program):
+        #Retrieve utilisation paths
         tu_paths = program.get_utilisation_paths()
+        #browse test_set
         for test in test_set:
             # Get the path for the test
             path = program.get_path(test)
@@ -191,7 +195,9 @@ class TDU:
     def __init__(self):
         return
     def test(self, test_set, program):
+        # Retrieve DU paths
         tdu_paths = program.get_DU_paths()
+        # Browse test_set
         for test in test_set:
             # Get the path for the test
             path = program.get_path(test)
