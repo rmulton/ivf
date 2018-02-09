@@ -88,9 +88,9 @@ class TA:
                             assign_labels.remove(node_or_edge)
 
         if len(assign_labels)==0:
-            print("Test TA passed.")
+            print("1. Test TA passed.")
         else:
-            print("Test TA didn't pass. Some assign edges are not visited: {}".format(assign_labels))
+            print("1. Test TA didn't pass. Some assign edges are not visited: {}".format(assign_labels))
 
 class TD:
     """
@@ -111,9 +111,9 @@ class TD:
                     if_while_edges.remove(edge)
         # If the list of edges is empty, the test pass, otherwise it doesn't.
         if len(if_while_edges)==0:
-            print("Test TD passed.")
+            print("2. Test TD passed.")
         else:
-            print("Test TD didn't pass. Some if or while edges are not visited: {}".format(if_while_edges))
+            print("2. Test TD didn't pass. Some if or while edges are not visited: {}".format(if_while_edges))
 
 class K_TC:
     """
@@ -136,9 +136,9 @@ class K_TC:
                     k_paths.remove(i_exec_path)
         # If k_paths is empty, the test pass, otherwise it doesn't
         if len(k_paths)==0:
-            print("Test {}-TC passed.".format(self.k))
+            print("3. Test {}-TC passed.".format(self.k))
         else:
-            print("Test {}-TC didn't pass. Some {}-paths are not visited: {}".format(self.k, self.k, k_paths))
+            print("3. Test {}-TC didn't pass. Some {}-paths are not visited: {}".format(self.k, self.k, k_paths))
 
 #Only implemented for i =1
 class I_TB:
@@ -158,9 +158,9 @@ class I_TB:
             if path in while_loops:
                 while_loops.remove(path)
         if len(while_loops)==0:
-            print("Test I_TB for i=1 passed")
+            print("4. Test I_TB for i=1 passed")
         else:
-            print("Test I_TB for i=1 didn't pass. Some paths are not visited: {}".format(while_loops))
+            print("4. Test I_TB for i=1 didn't pass. Some paths are not visited: {}".format(while_loops))
 
 class TDef:
     """
@@ -194,9 +194,9 @@ class TDef:
                         if var in used_vars:
                             assignation_edges.pop(var, None)
         if len(assignation_edges)==0:
-            print("Test TDef passed")
+            print("5. Test TDef passed")
         else:
-            print("Test TDef didn't pass. Some variables {} are not used on edges: {}".format(assignation_edges.keys(), assignation_edges))
+            print("5. Test TDef didn't pass. Some variables {} are not used on edges: {}".format(assignation_edges.keys(), assignation_edges))
 
 class TU:
     """
@@ -217,9 +217,9 @@ class TU:
             if path in tu_paths_new:
                 tu_paths_new.remove(path)
         if len(tu_paths_new)==0:
-            print("Test TU passed")
+            print("6. Test TU passed")
         else:
-            print("Test TU didn't pass. Some paths are not visited: {}".format(tu_paths_new))
+            print("6. Test TU didn't pass. Some paths are not visited: {}".format(tu_paths_new))
 
 
 class TDU:
@@ -238,9 +238,9 @@ class TDU:
             if path in tdu_paths:
                 tdu_paths.remove(path)
         if len(tdu_paths) == 0:
-            print("Test TDU passed")
+            print("7. Test TDU passed")
         else:
-            print("Test TDU didn't pass. Some paths are not visited: {}".format(tdu_paths))
+            print("7. Test TDU didn't pass. Some paths are not visited: {}".format(tdu_paths))
 
 class TC:
     """
@@ -260,6 +260,6 @@ class TC:
                     if edge_cond in conditions:
                         conditions.remove(edge_cond)
         if len(conditions) == 0:
-            print("Test TC passed")
+            print("8. Test TC passed")
         else:
-            print("Test TC didn't pass. Some conditions are not satisfied by any test provided: {}".format(tdu_paths)) 
+            print("8. Test TC didn't pass. Some conditions are not satisfied by any test provided: {}".format(conditions)) 
