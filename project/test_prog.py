@@ -94,6 +94,11 @@ if __name__=="__main__":
     td_test_set = [{"x": 0}]
     tests.test_td(td_test_set, pgm)
 
+    # Test the KTC criterium
+    ktc_test_set = [{"x": 0}, {"x": 5}]
+    tests.test_ktc(ktc_test_set, pgm, 1)
+
+    # Test the ITB criterium
     pgm_while = create_test_program2()
     itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
     tests.test_itb(itb_tests_set,pgm_while)

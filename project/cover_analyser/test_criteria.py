@@ -11,10 +11,19 @@ def test_ta(test_set, program):
 
 def test_td(test_set, program):
     """
-    Wrapper function for TD.test(test_set, program)
+    Wrapper function that instantiates a TD object and runs TD.test(test_set, program)
     """
     tester = TD()
     tester.test(test_set, program)
+    return
+
+def test_ktc(test_set, program, k):
+    """
+    Wrapper function that instantiates a K_TC(k) object and runs K_TC.test(test_set, program)
+    """
+    tester = K_TC(k)
+    tester.test(test_set, program)
+    return
 
 def test_itb(test_set, program):
     """
@@ -22,6 +31,7 @@ def test_itb(test_set, program):
     """
     tester = I_TB()
     tester.test(test_set, program)
+    return
 
 class TA:
     def __init__(self):
@@ -57,13 +67,10 @@ class TD:
         for test in test_set:
             # Get the path for the test
             path = program.get_path(test)
-            for node_or_edge in path:
-                # If it is a node
-                if isinstance(node_or_edge, OutEdgeView):
-                    edge = node_or_edge
-                    # If the edge is in the if_while_edges list, it can be removed
-                    if edge in if_while_edges:
-                        if_while_edges.remove(edge)
+            for edge in path:
+                # If the edge is in the if_while_edges list, it can be removed
+                if edge in if_while_edges:
+                    if_while_edges.remove(edge)
         # If the list of edges is empty, the test pass, otherwise it doesn't.
         if len(if_while_edges)==0:
             print("Test TD passed.")
@@ -80,15 +87,17 @@ class K_TC:
         # Remove from k_paths the paths that the program follows when using the test set
         for test in test_set:
             # Get the path for the test
-            path = program.get_path(test)
+            exec_path = program.get_path(test)
             # If the path is in the paths of length inferior or equal to k, remove it
-            if path in k_paths:
-                k_paths.remove(path)
+            for i in range(min(self.k+1, len(exec_path))):
+                i_exec_path = exec_path[:i]
+                if i_exec_path in k_paths:
+                    k_paths.remove(i_exec_path)
         # If k_paths is empty, the test pass, otherwise it doesn't
         if len(k_paths)==0:
-            return True
+            print("Test {}-TC passed.".format(self.k))
         else:
-            return False
+            print("Test {}-TC didn't pass. Some {}-paths are not visited: {}".format(self.k, self.k, k_paths))
 
 #Only implemented for i =1
 class I_TB:
