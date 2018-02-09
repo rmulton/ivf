@@ -104,7 +104,7 @@ if __name__=="__main__":
     tests.test_itb(itb_tests_set,pgm_while,1)
 
     # Test the TDef criterium
-    test_set = [{"x": 0}]
+    test_set = [{"x": 0}, {"x": 5}, {"x": -1}]
     tests.test_tdef(test_set, pgm)
 
     # Test the TU criterium

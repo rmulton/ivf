@@ -1,8 +1,6 @@
 MODULE main
 VAR
     phi : boolean;
-    psi : boolean;
-    rho : boolean;
 ASSIGN
     init(phi) := TRUE;
 
