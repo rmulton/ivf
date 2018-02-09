@@ -121,7 +121,7 @@ def create_test_program3():
 
     pgm.add_node("_", attr_dict={"operation":node.End()})
     pgm.add_edge(5, "_", attr_dict={"expr": boolean.Always(), "instr": instructions.Assign(x, Var(value=1))})
-    pgm.add_edge(6, "_", attr_dict={"expr": boolean.Always(), "instr": instructions.Assign(x, arithmetic.Add(x, Var(value=1)))})
+    pgm.add_edge(6, "_", attr_dict={"expr": boolean.InfOrEqual(x, Var(value=1), no=False), "instr": instructions.Assign(x, arithmetic.Add(x, Var(value=1)))})
 
     # Get the program from the program graph
     pgm = Program(pgm, variables)

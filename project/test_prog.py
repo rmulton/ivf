@@ -7,6 +7,10 @@ if __name__=="__main__":
     pgm_while = examples.create_test_program2()
     pgm_while_2 = examples.create_test_program3()
 
+    ######################
+    ### Test program 1 ###
+    ######################
+
     print("=== First program ===")
     # Test the TA criterion
     ta_test_set = [{"x": 0},{"x": -1},{"x": 1}]
@@ -41,16 +45,45 @@ if __name__=="__main__":
     tests.test_tdu(tu_test_set, pgm)
 
     print("=== End for first program ===")
+
+    ##########################
+    ### Test program While ###
+    ##########################
+
+    print("=== While program ===")
+
+    # Test the TA criterion
+    ta_test_set = [{"x": 0},{"x": -1},{"x": 1}]
+    tests.test_ta(ta_test_set, pgm_while_2)
+
+    # Test the TD criterion
+    td_test_set = [{"x": 0}]
+    tests.test_td(td_test_set, pgm_while_2)
+
+    # Test the KTC criterium
+    ktc_test_set = [{"x": 0}, {"x": 5}]
+    tests.test_ktc(ktc_test_set, pgm_while_2, 2)
+
     # Test the ITB criterium
     itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_itb(itb_tests_set,pgm_while,1)
+    tests.test_itb(itb_tests_set, pgm_while_2, 1)
+
+    # Test the TDef criterium
+    test_set = [{"x": 0}, {"x": 5}, {"x": -1}]
+    tests.test_tdef(test_set, pgm_while_2)
+
 
     # Test the TU criterium
     tu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_tu(tu_test_set,pgm_while)
+    tests.test_tu(tu_test_set, pgm_while_2)
 
     # Test the TDU criterium
     tdu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_tdu(tu_test_set,pgm_while)
+    tests.test_tdu(tu_test_set, pgm_while_2)
 
+    # Test the TC criterium
+    tc_test_set = [{"x": 0}, {"x": 5}, {"x": -1}]
+    tests.test_tc(tc_test_set, pgm_while_2)
+
+    print("=== End of While program ===")
 
