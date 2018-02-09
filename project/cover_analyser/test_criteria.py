@@ -179,16 +179,19 @@ class TU:
     def test(self, test_set, program):
         #Retrieve utilisation paths
         tu_paths = program.get_utilisation_paths()
+        tu_paths_new = []
+        for elt in tu_paths:
+            tu_paths_new.append(elt[0])
         #browse test_set
         for test in test_set:
             # Get the path for the test
             path = program.get_path(test)
-            if path in tu_paths:
-                tu_paths.remove(path)
-        if len(tu_paths)==0:
+            if path in tu_paths_new:
+                tu_paths_new.remove(path)
+        if len(tu_paths_new)==0:
             print("Test TU passed")
         else:
-            print("Test TU didn't pass. Some paths are not visited: {}".format(tu_paths))
+            print("Test TU didn't pass. Some paths are not visited: {}".format(tu_paths_new))
 
 
 class TDU:
