@@ -102,4 +102,4 @@ if __name__=="__main__":
     pgm_while = create_test_program2()
     # itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
     # tests.test_itb(itb_tests_set,pgm_while)
-    pgm_while.get_i_while_loops(2)
+    pgm_while.get_k_paths_finished(6)
