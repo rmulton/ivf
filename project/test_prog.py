@@ -100,17 +100,17 @@ if __name__=="__main__":
 
     # Test the ITB criterium
     pgm_while = create_test_program2()
-    # itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
-    # tests.test_itb(itb_tests_set,pgm_while)
-
-
-    #### BUG ####
-    pgm_while.get_k_paths_finished(6)
-
-    # pgm_while = create_test_program2()
-    # itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
-    # tests.test_itb(itb_tests_set,pgm_while)
+    itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
+    tests.test_itb(itb_tests_set,pgm_while,1)
 
     # Test the TDef criterium
     test_set = [{"x": 0}]
     tests.test_tdef(test_set, pgm)
+
+    # Test the TU criterium
+    tu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
+    tests.test_tu(tu_test_set,pgm_while)
+
+    # Test the TDU criterium
+    tdu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
+    tests.test_tdu(tu_test_set,pgm_while)
