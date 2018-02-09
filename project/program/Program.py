@@ -56,7 +56,7 @@ class Program:
             for edge in self.program_graph.out_edges(last_node):
                 path_increment = list(cur_paths)
                 new_node = edge[1]
-                path_increment += [new_node]
+                path_increment += [edge]
                 if new_node in self.final_nodes:
                     finished_paths.append(path_increment)
                 else:
