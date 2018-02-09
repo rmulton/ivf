@@ -32,6 +32,8 @@ class Program:
     
     # Used for K_TC
     def get_k_paths(self, k):
+        if k==0:
+            return list()
         finished_paths = list()
         unfinished_paths = list()
         initial_edges = self.program_graph.out_edges(self.initial_node)
@@ -49,12 +51,12 @@ class Program:
         through n+1 nodes. Add them to the finished paths if the new node is a final node of the graph,
         add them to unfinished_paths otherwise.
         """
+        new_paths = list()
         for unfinished_path in unfinished_paths:
-            last_node = unfinished_path[-1]
-            cur_paths = list(unfinished_path)
-            new_paths = list()
+            last_node = unfinished_path[-1][-1]
+            cur_path = list(unfinished_path)
             for edge in self.program_graph.out_edges(last_node):
-                path_increment = list(cur_paths)
+                path_increment = list(cur_path)
                 new_node = edge[1]
                 path_increment += [edge]
                 if new_node in self.final_nodes:
@@ -68,7 +70,7 @@ class Program:
              [1,(1,3),3,(3,4),4,(4,5),5,(5,"_"),"_"]]
         return l
 
-    # Used for I_TB
+    # # Used for I_TB
     # def get_i_while_loops(self, i):
     #     #Extracting while_loops
     #     while_loops = []
