@@ -1,15 +1,10 @@
 from cover_analyser.Var import Var
-class And:
-    def __init__(self, bool1, bool2):
-        super().__init__()
-        self.bool1 = bool1
-        self.bool2 = bool2
-    def result(self):
-        return (self.bool1.result() and self.bool2.result())
-    def variables(self):
-        return self.bool1.variables() + self.bool2.variables()
 
 class Equal:
+    """
+    Représente l'opérateur booléean d'égalité
+    .result() renvoie True si var1 et var2 ont la même valeur
+    """
     def __init__(self,var1,var2, no = False):
         super().__init__()
         self.var1 = var1
@@ -38,6 +33,10 @@ class Equal:
         return variables
 
 class InfOrEqual:
+    """
+    Représente l'opérateur booléean d'inégalité
+    .result() renvoie True si var1 a une valeur supérieure ou égale à celle de var2
+    """
     def __init__(self, var1, var2, no=False):
         super().__init__()
         self.var1 = var1
@@ -67,7 +66,23 @@ class InfOrEqual:
             variables.append(self.var2)
         return variables
 
+class And:
+    """
+    Permet de composer deux booléens selon l'opérateur And
+    """
+    def __init__(self, bool1, bool2):
+        super().__init__()
+        self.bool1 = bool1
+        self.bool2 = bool2
+    def result(self):
+        return (self.bool1.result() and self.bool2.result())
+    def variables(self):
+        return self.bool1.variables() + self.bool2.variables()
+
 class Or:
+    """
+    Permet de composer deux opérateurs booléens selon l'opérateur or
+    """
     def __init__(self, bool1, bool2):
         super().__init__()
         self.bool1 = bool1
@@ -79,6 +94,9 @@ class Or:
         return self.bool1.variables() + self.bool2.variables()
 
 class Always:
+    """
+    Opérateur renvoyant toujours True
+    """
     def __init__(self):
         super().__init__()
 

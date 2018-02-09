@@ -12,8 +12,8 @@ import cover_analyser.test_criteria as tests
 import program.node as node
 
 def create_test_program1():
-    """"
-    This implements the graph presented in the note
+    """
+    Crée le programme donné en exemple dans le sujet
     """
     # Create the variables
     x = Var()
