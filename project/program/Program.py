@@ -31,7 +31,39 @@ class Program:
     
     # Used for K_TC
     def get_k_paths(self, k):
-        return
+        finished_paths = list()
+        unfinished_paths = list()
+        initial_edges = self.program_graph.out_edges(self.initial_node)
+        for initial_edge in initial_edges:
+            unfinished_paths.append([initial_edge])
+        # k-1 because we already added the initial edges
+        for _ in range(0, k-1):
+            finished_paths, unfinished_paths = self.increment_paths(finished_paths, unfinished_paths)
+        k_paths = finished_paths + unfinished_paths
+        return k_paths
+    
+    def increment_paths(self, finished_paths, unfinished_paths):
+        """
+        Takes a list of finished paths and a list of unfinished paths through n nodes. Find the paths
+        through n+1 nodes. Add them to the finished paths if the new node is a final node of the graph,
+        add them to unfinished_paths otherwise.
+        """
+        for unfinished_path in unfinished_paths:
+            last_node = unfinished_path[-1]
+            cur_paths = list(unfinished_path)
+            new_paths = list()
+            for edge in self.program_graph.out_edges(last_node):
+                path_increment = list(cur_paths)
+                new_node = edge[1]
+                path_increment += [new_node]
+                if new_node in self.final_nodes:
+                    finished_paths.append(path_increment)
+                else:
+                    new_paths.append(path_increment)
+        return finished_paths, new_paths
+
+        
+        return finished_paths, unfinished_paths
     
     # Used for I_TB
     def get_i_while_loops(self, i):
@@ -51,10 +83,9 @@ class Program:
                 attr_dict = data["attr_dict"]
                 if attr_dict['expr'].result():
                     attr_dict['instr'].run()
-                    path += [node,edge]
+                    path += [edge]
                     node = edge[1]
                     break
-        path.append(node)
         return path
 
         

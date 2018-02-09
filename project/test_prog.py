@@ -53,3 +53,7 @@ if __name__=="__main__":
     # Test the TD criterium
     td_test_set = [{"x": 0}]
     tests.test_td(td_test_set, pgm)
+
+    # Test the KTC criterium
+    ktc_test_set = [{"x": 0}, {"x": 5}]
+    tests.test_ktc(ktc_test_set, pgm, 1)
