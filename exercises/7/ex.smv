@@ -1,6 +1,8 @@
 MODULE main
 VAR
+    -- Nombre de processus
     i : 0..4;
+    -- Valeurs des drapeaux
     state : array 0..4 of 0..7;
 ASSIGN
     next(state[0]) := case

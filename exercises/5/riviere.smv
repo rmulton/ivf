@@ -1,5 +1,6 @@
 MODULE main
 VAR
+    -- Tous les états possibles : l = lombric, m = mille-pattes, s = sauterelle, f = feuille, g = gauche, d = droite
     state : {lgmgsgfg, ldmgsgfd, lgmdsgfd, lgmgsdfd, lgmdsdfd, lgmgsdfg, lgmdsgfg, ldmgsdfd, ldmdsgfd, ldmgsgfg, ldmdsdfd};
 ASSIGN
     init(state) := lgmgsgfg;

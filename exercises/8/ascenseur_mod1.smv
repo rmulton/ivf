@@ -1,7 +1,10 @@
 MODULE main
 VAR
+    -- Bouton appuyé dans l'ascenseur, 0 = aucun bouton n'est utilisé
     asc_b : 0..3;
+    -- Position ascenseur
     asc_p : 1..3;
+    -- Boutons à l'étage i
     et1 : boolean;
     et2 : boolean;
     et3 : boolean;
@@ -22,6 +25,7 @@ ASSIGN
         asc_b = 0 & et1=FALSE & et2=FALSE & et3=TRUE: 3;
         
         asc_b = 0 & et1=FALSE & et2=FALSE & et3=FALSE: asc_p;
+
         -- Utilisation du bouton dans l'ascenseur
         asc_b != 0 & asc_p!=asc_b : asc_b;
         
