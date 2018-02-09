@@ -102,7 +102,11 @@ if __name__=="__main__":
     pgm_while = create_test_program2()
     # itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
     # tests.test_itb(itb_tests_set,pgm_while)
+
+
+    #### BUG ####
     pgm_while.get_k_paths_finished(6)
+    
     # pgm_while = create_test_program2()
     # itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
     # tests.test_itb(itb_tests_set,pgm_while)
@@ -110,4 +114,3 @@ if __name__=="__main__":
     # Test the TDef criterium
     test_set = [{"x": 0}]
     tests.test_tdef(test_set, pgm)
->>>>>>> a542a9817419171ccb42ff56b8ea70373ae33c28
