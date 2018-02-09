@@ -1,6 +1,10 @@
 from cover_analyser.Var import Var
 
 class Add:
+    """
+    Représente l'expression arithmétique d'addition
+    .result() donne la somme des valeurs de var1 et var2
+    """
     def __init__(self, var1, var2):
         self.var1 = var1
         self.var2 = var2
@@ -27,6 +31,10 @@ class Add:
 
 
 class Min(Add):
+    """
+    Représente l'expression arithmétique de soustraction
+    .result() donne la différence var1 - var2
+    """
     def __init__(self, var1, var2):
         super().__init__(var1, var2)
     def result(self):
@@ -49,6 +57,10 @@ class Min(Add):
         return variables
 
 class Mult:
+    """
+    Représente l'expression arithmétique de multiplication
+    .result() donne le produit des valeurs de var1 et var2
+    """
     def __init__(self, var1, var2):
         self.var1 = var1
         self.var2 = var2
