@@ -15,8 +15,9 @@ class Program:
     # Used for TA criterium
     def get_assign_labels(self):
         assign_labels = []
-        for edge, attr_dic in self.program_graph.edges.items():
-            if isinstance(attr_dic['instr'],Assign):
+        for edge, data in self.program_graph.edges.items():
+            attr_dict = data["attr_dict"]
+            if isinstance(attr_dict['instr'],Assign):
                 assign_labels += [edge]
         return assign_labels
     
@@ -62,12 +63,30 @@ class Program:
                     new_paths.append(path_increment)
         return finished_paths, new_paths
 
-        
-        return finished_paths, unfinished_paths
-    
+    def get_1_while_loops(self):
+        l = [[1,(1,2),2,(2,4),4,(4,5),5,(5,"_"),"_"],[1,(1,2),2,(2,4),4,(4,6),6,(6,4),4,(4,5),5,(5,"_"),"_"],
+             [1,(1,3),3,(3,4),4,(4,5),5,(5,"_"),"_"]]
+        return l
+
     # Used for I_TB
-    def get_i_while_loops(self, i):
-        return
+    # def get_i_while_loops(self, i):
+    #     #Extracting while_loops
+    #     while_loops = []
+    #     for edge in self.program_graph.edges:
+    #         for edge2 in self.program_graph.edges:
+    #             if edge[0] == edge2[1] and edge[1] == edge2[0] and (edge[1],edge[0]) not in while_loops:
+    #                 while_loops.append(edge)
+    #     for edge in while_loops:
+    #         edges = self.program_graph.out_edges(edge[0])
+    #         for edg_out in edges:
+    #             if edg_out[1] == edge[1]:
+    #                 pass
+    #             else:
+    #                 data = self.program_graph.get_edge_data(edge[0], edge[1])
+    #                 attr_dict = data['attr_dict']
+
+
+
 
     def get_path(self, initial_value):
         # Initiate variables

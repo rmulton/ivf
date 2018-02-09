@@ -1,4 +1,13 @@
 from networkx.classes.reportviews import OutEdgeView
+from cover_analyser.instructions import Assign
+
+def test_ta(test_set, program):
+    """
+    Wrapper function for TA.test(test_set, program)
+    """
+    tester = TA()
+    tester.test(test_set, program)
+
 
 def test_td(test_set, program):
     """
@@ -6,6 +15,7 @@ def test_td(test_set, program):
     """
     tester = TD()
     tester.test(test_set, program)
+    return
 
 def test_ktc(test_set, program, k):
     """
@@ -13,17 +23,39 @@ def test_ktc(test_set, program, k):
     """
     tester = K_TC(k)
     tester.test(test_set, program)
+    return
+
+def test_itb(test_set, program):
+    """
+    Wrapper function for ITB.test(test_set, program)
+    """
+    tester = I_TB()
+    tester.test(test_set, program)
+    return
 
 class TA:
     def __init__(self):
         return
     def test(self, test_set, program):
+        #Get the assign edges
         assign_labels = program.get_assign_labels()
-        # Stuff
+        # Run the program for all the test set, and remove labels of visited nodes
+        for test in test_set:
+            # Get the path for the test
+            path = program.get_path(test)
+            for node_or_edge in path:
+                #Test if is an edge
+                if isinstance(node_or_edge,tuple):
+                    data = program.program_graph.get_edge_data(node_or_edge[0],node_or_edge[1])
+                    attr_dict = data['attr_dict']
+                    if isinstance(attr_dict['instr'],Assign):
+                        if node_or_edge in assign_labels:
+                            assign_labels.remove(node_or_edge)
+
         if len(assign_labels)==0:
-            return True
+            print("Test TA passed.")
         else:
-            return False
+            print("Test TA didn't pass. Some assign edges are not visited: {}".format(assign_labels))
 
 class TD:
     def __init__(self):
@@ -67,12 +99,24 @@ class K_TC:
         else:
             print("Test {}-TC didn't pass. Some {}-paths are not visited: {}".format(self.k, self.k, k_paths))
 
+#Only implemented for i =1
 class I_TB:
-    def __init__(self, i):
+    def __init__(self, i=1):
         self.i = i
-        return
+
     def test(self, test_set, program):
-        return
+        while_loops_1 = program.get_1_while_loops()
+        for test in test_set:
+            # Get the path for the test
+            path = program.get_path(test)
+            if path in while_loops_1:
+                while_loops_1.remove(path)
+        if len(while_loops_1)==0:
+            print("Test I_TB for i=1 passed")
+        else:
+            print("Test I_TB for i=1 didn't pass. Some paths are not visited: {}".format(while_loops_1))
+
+
 
 class TDef:
     def __init__(self):
