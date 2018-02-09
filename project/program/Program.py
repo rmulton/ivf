@@ -99,23 +99,14 @@ class Program:
         return l
 
     def while_loops_in_path(self,path):
-        loops = 0
+        n_loops = 0
+        former_edge = list()
         for i, edge in enumerate(path):
-            loop_loc = 0
-            i_loc = i
-            if i < (len(path)-1):
-                if edge[0] == path[i+1][1] and edge[1] == path[i+1][0]:
-                    loop_loc += 1
-                    i_loc += 2
-                    while path[i_loc][0] == path[i_loc+1][1] and path[i_loc][1] == path[i_loc+1][0] and \
-                                    path[i_loc-1][0] == path[i_loc][1] and path[i_loc-1][1] == path[i_loc][0]:
-                        loop_loc += 1
-                        i_loc += 2
-                    if loop_loc > loops:
-                        loops = loop_loc
-        return loops
-
-
+            if len(former_edge)>0:
+                if edge[1]==former_edge[0] and edge[0]==former_edge[1]:
+                    n_loops += 1
+            former_edge = edge
+        return n_loops
 
     # Used for I_TB
     def get_i_while_loops(self, i):
