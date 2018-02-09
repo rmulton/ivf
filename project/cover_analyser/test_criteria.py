@@ -25,11 +25,11 @@ def test_ktc(test_set, program, k):
     tester.test(test_set, program)
     return
 
-def test_itb(test_set, program):
+def test_itb(test_set, program,i):
     """
     Wrapper function for ITB.test(test_set, program)
     """
-    tester = I_TB()
+    tester = I_TB(i)
     tester.test(test_set, program)
     return
 
@@ -37,6 +37,23 @@ def test_tdef(test_set, program):
     tester = TDef()
     tester.test(test_set, program)
     return
+
+def test_tu(test_set, program):
+    """
+    Wrapper function for ITB.test(test_set, program)
+    """
+    tester = TU()
+    tester.test(test_set, program)
+    return
+
+def test_tdu(test_set, program):
+    """
+    Wrapper function for ITB.test(test_set, program)
+    """
+    tester = TDU()
+    tester.test(test_set, program)
+    return
+
 
 class TA:
     def __init__(self):
@@ -106,20 +123,20 @@ class K_TC:
 
 #Only implemented for i =1
 class I_TB:
-    def __init__(self, i=1):
+    def __init__(self, i):
         self.i = i
 
     def test(self, test_set, program):
-        while_loops_1 = program.get_1_while_loops()
+        while_loops = program.get_i_while_loops(self.i)
         for test in test_set:
             # Get the path for the test
             path = program.get_path(test)
-            if path in while_loops_1:
-                while_loops_1.remove(path)
-        if len(while_loops_1)==0:
+            if path in while_loops:
+                while_loops.remove(path)
+        if len(while_loops)==0:
             print("Test I_TB for i=1 passed")
         else:
-            print("Test I_TB for i=1 didn't pass. Some paths are not visited: {}".format(while_loops_1))
+            print("Test I_TB for i=1 didn't pass. Some paths are not visited: {}".format(while_loops))
 
 class TDef:
     def __init__(self):
@@ -156,15 +173,34 @@ class TDef:
 
 class TU:
     def __init__(self):
-        return
-    def test(self, test_set, program_graph):
-        return
+        pass
+    def test(self, test_set, program):
+        tu_paths = program.get_utilisation_paths()
+        for test in test_set:
+            # Get the path for the test
+            path = program.get_path(test)
+            if path in tu_paths:
+                tu_paths.remove(path)
+        if len(tu_paths)==0:
+            print("Test TU passed")
+        else:
+            print("Test TU didn't pass. Some paths are not visited: {}".format(tu_paths))
+
 
 class TDU:
     def __init__(self):
         return
-    def test(self, test_set, program_graph):
-        return
+    def test(self, test_set, program):
+        tdu_paths = program.get_DU_paths()
+        for test in test_set:
+            # Get the path for the test
+            path = program.get_path(test)
+            if path in tdu_paths:
+                tdu_paths.remove(path)
+        if len(tdu_paths) == 0:
+            print("Test TDU passed")
+        else:
+            print("Test TDU didn't pass. Some paths are not visited: {}".format(tdu_paths))
 
 class TC:
     def __init__(self):

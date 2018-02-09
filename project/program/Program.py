@@ -55,7 +55,6 @@ class Program:
         # k-1 because we already added the initial edges
         for _ in range(0, k-1):
             finished_paths, unfinished_paths = self.increment_paths(finished_paths, unfinished_paths)
-        print(finished_paths)
         return finished_paths
 
     def increment_paths(self, finished_paths, unfinished_paths):
@@ -103,14 +102,13 @@ class Program:
 
     # Used for I_TB
     def get_i_while_loops(self, i):
+        # Return paths with a while loop of length = i
         i_while_loops = []
         for k in range(i*10):
             k_paths = self.get_k_paths_finished(k)
-            print(k_paths)
             for path in k_paths:
                 if self.while_loops_in_path(path) == i and path not in i_while_loops:
                     i_while_loops += [path]
-        print(i_while_loops)
         return i_while_loops
 
 
@@ -145,25 +143,42 @@ class Program:
 
 
     def get_utilisation_paths(self):
+        # returns path where there is a definition of X and a use of X with no redefinition between
+        # - > (path,edge of definition, edge of use)
+
         result = []
-        for k in range(10):
+        # Because of while loops, we have an infinity of paths. We decide to take paths where length < 20
+        for k in range(20):
             paths = self.get_k_paths_finished(k)
             for path in paths:
                 for i, edge in enumerate(path):
                     data = self.program_graph.get_edge_data(edge[0], edge[1])
                     attr_dict = data["attr_dict"]
                     if isinstance(attr_dict['instr'],Assign) or i== 0:
-                        for j in range(i,len(path)):
+                        for j in range(i+1,len(path)):
                             data_temp = self.program_graph.get_edge_data(path[j][0], path[j][1])
                             attr_dict_temp = data_temp["attr_dict"]
                             if isinstance(attr_dict_temp['instr'],Assign):
                                 break
                             elif isinstance(attr_dict_temp['expr'],InfOrEqual) or isinstance(attr_dict_temp['expr'],Equal):
-                                if path not in result:
-                                    result.append(path)
+                                if (path,i,j) not in result:
+                                    result.append((path,i,j))
                                     break
-        print(result)
         return result
+
+    def get_DU_paths(self):
+        #get du paths from tu paths by checking length of while loops
+        result = []
+        paths = self.get_utilisation_paths()
+        for path,i,j in paths:
+            path_temp = path[i:j]
+            if self.while_loops_in_path(path_temp)<=1 and path not in result:
+                result += [path]
+        return result
+                
+
+
+
 
 
         
