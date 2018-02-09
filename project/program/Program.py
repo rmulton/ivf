@@ -175,14 +175,12 @@ class Program:
             if self.while_loops_in_path(path_temp)<=1 and path not in result:
                 result += [path]
         return result
-                
-
-
-
-
-
-        
-
-
     
-    # TODO: TU, TDU, TC
+    def get_conditions(self):
+        conditions = list()
+        for edge in self.program_graph.edges:
+            edge_decision = self.program_graph.get_edge_data(*edge)["attr_dict"]["expr"]
+            edge_conditions = edge_decision.conditions()
+            conditions += edge_conditions
+        return conditions
+                

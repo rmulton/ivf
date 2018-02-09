@@ -114,3 +114,7 @@ if __name__=="__main__":
     # Test the TDU criterium
     tdu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
     tests.test_tdu(tu_test_set,pgm_while)
+
+    # Test the TC criterium
+    tc_test_set = [{"x": 0}, {"x": 5}, {"x": -1}]
+    tests.test_tc(tc_test_set, pgm)

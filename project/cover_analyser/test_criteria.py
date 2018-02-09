@@ -167,7 +167,7 @@ class TDef:
                         if var in used_vars:
                             assignation_edges.pop(var, None)
         if len(assignation_edges)==0:
-            print("Test Tdef passed")
+            print("Test TDef passed")
         else:
             print("Test TDef didn't pass. Some variables {} are not used on edges: {}".format(assignation_edges.keys(), assignation_edges))
 
