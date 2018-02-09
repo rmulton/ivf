@@ -42,7 +42,18 @@ class Program:
             finished_paths, unfinished_paths = self.increment_paths(finished_paths, unfinished_paths)
         k_paths = finished_paths + unfinished_paths
         return k_paths
-    
+
+    def get_k_paths_finished(self, k):
+        finished_paths = list()
+        unfinished_paths = list()
+        initial_edges = self.program_graph.out_edges(self.initial_node)
+        for initial_edge in initial_edges:
+            unfinished_paths.append([initial_edge])
+        # k-1 because we already added the initial edges
+        for _ in range(0, k-1):
+            finished_paths, unfinished_paths = self.increment_paths(finished_paths, unfinished_paths)
+        return finished_paths
+
     def increment_paths(self, finished_paths, unfinished_paths):
         """
         Takes a list of finished paths and a list of unfinished paths through n nodes. Find the paths
@@ -68,24 +79,32 @@ class Program:
              [1,(1,3),3,(3,4),4,(4,5),5,(5,"_"),"_"]]
         return l
 
+    def while_loops_in_path(self,path):
+        loops = 0
+        for i, edge in path.items():
+            loop_loc = 0
+            i_loc = i
+            if edge[0] == path[i+1][1] and edge[1] == path[i+1][0]:
+                while path[i_loc][0] == path[i_loc+1][1] and path[i_loc][1] == path[i_loc+1][0]:
+                    loop_loc += 1
+                    i_loc += 1
+                if loop_loc > loops:
+                    loops = loop_loc
+        return loops
+
+
+
     # Used for I_TB
-    # def get_i_while_loops(self, i):
-    #     #Extracting while_loops
-    #     while_loops = []
-    #     for edge in self.program_graph.edges:
-    #         for edge2 in self.program_graph.edges:
-    #             if edge[0] == edge2[1] and edge[1] == edge2[0] and (edge[1],edge[0]) not in while_loops:
-    #                 while_loops.append(edge)
-    #     for edge in while_loops:
-    #         edges = self.program_graph.out_edges(edge[0])
-    #         for edg_out in edges:
-    #             if edg_out[1] == edge[1]:
-    #                 pass
-    #             else:
-    #                 data = self.program_graph.get_edge_data(edge[0], edge[1])
-    #                 attr_dict = data['attr_dict']
-
-
+    def get_i_while_loops(self, i):
+        i_while_loops = []
+        for k in range(i*10):
+            k_paths = self.get_k_paths(k)
+            print(k_paths)
+        #     for path in k_paths:
+        #         if self.while_loops_in_path(path) == i:
+        #             i_while_loops += [path]
+        # # print(i_while_loops)
+        return i_while_loops
 
 
     def get_path(self, initial_value):
