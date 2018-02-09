@@ -14,11 +14,17 @@ class Program:
 
     # Initiate the variables
     def _initiate_variables(self, init_values):
+        """
+        Initiate the variables to compute the program
+        """
         for variable_name, variable in self.variables.items():
             variable.value = init_values[variable_name]
 
     # Used for TA criterium
     def get_assign_labels(self):
+        """
+        Get all the edges with assign labels
+        """
         assign_labels = []
         for edge, data in self.program_graph.edges.items():
             attr_dict = data["attr_dict"]
@@ -28,6 +34,9 @@ class Program:
     
     # Used for TD
     def get_if_while_edges(self):
+        """
+        Get all the edges with if and while loops
+        """
         if_while_edges = list()
         for edge, data in self.program_graph.edges.items():
             attr_dict = data["attr_dict"]
@@ -37,6 +46,9 @@ class Program:
     
     # Used for K_TC
     def get_k_paths(self, k):
+        """
+        Get all the paths in the graph of length <= k
+        """
         if k==0:
             return list()
         finished_paths = list()
@@ -117,6 +129,9 @@ class Program:
 
 
     def get_path(self, initial_value):
+        """
+        Get the path the program follows for initial_value as a list of edges
+        """
         # Initiate variables
         self._initiate_variables(initial_value)
         # Initialize browsing
@@ -136,6 +151,9 @@ class Program:
         return path
     
     def get_assignation_edges(self):
+        """
+        Get all the edges that assign a value to a variable
+        """
         assignation_edges = dict()
         for edge in self.program_graph.edges:
             if edge[1] not in self.final_nodes:
@@ -189,6 +207,9 @@ class Program:
     
     # Used for TC test
     def get_conditions(self):
+        """
+        Get all the conditions in the graph
+        """
         conditions = list()
         for edge in self.program_graph.edges:
             edge_decision = self.program_graph.get_edge_data(*edge)["attr_dict"]["expr"]
