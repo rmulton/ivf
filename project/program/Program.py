@@ -20,7 +20,7 @@ class Program:
             attr_dict = data["attr_dict"]
             if isinstance(attr_dict['instr'],Assign):
                 assign_labels += [edge]
-        return assign_labels
+        return set(assign_labels)
     
     # Used for TD
     def get_if_while_edges(self):
@@ -136,11 +136,11 @@ class Program:
     def get_assignation_edges(self):
         assignation_edges = dict()
         for edge in self.program_graph.edges:
-            instr = self.program_graph.get_edge_data(*edge)["attr_dict"]["instr"]
-            vars = instr.variables()
-            if isinstance(instr, Assign) and len(vars)>0:
-                # TODO: Check that it should be var[0]
-                assignation_edges[vars[0]] = edge
+            if edge[1] not in self.final_nodes:
+                instr = self.program_graph.get_edge_data(*edge)["attr_dict"]["instr"]
+                vars = instr.variables()
+                if isinstance(instr, Assign) and len(vars)>0:
+                    assignation_edges[vars[0]] = edge
         return assignation_edges
 
 

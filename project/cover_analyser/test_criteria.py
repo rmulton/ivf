@@ -1,4 +1,3 @@
-
 import networkx as nx
 from cover_analyser.instructions import Assign
 
@@ -126,21 +125,30 @@ class TDef:
     def __init__(self):
         return
     def test(self, test_set, program):
-        # NB : is test_set useless ?
         # On récupère les arrêtes sur lesquelles il y a une assignation
         assignation_edges = program.get_assignation_edges()
-        for variable, edge in assignation_edges.items():
-            # On récupère le bout de l'arrête
-            starting_node = edge[1]
-            # On vérifie qu'il y a un noeud après starting_node utilisant la variable désignée par variable_name
-            descendants = nx.descendants(program.program_graph, starting_node)
-            for descendant in descendants:
-                for outedge in program.program_graph.outedge(descendant):
-                    edge_components = outedge.attr_dict["attr_dict"]
-                    instr = edge_components["instr"]
-                    expr = edge_components["expr"]
-                    if variable in instr.variables() + expr.variables():
-                        assignation_edges.remove(variable)
+
+        # Pour chaque test, on vérifie si le chemin permet de valider le critère pour une paire
+        # (variable, arrête) des noeuds d'assignation contenus par assignation_edges
+        for test in test_set:
+            # On récupère le chemin associé au test
+            path = program.get_path(test)
+            # On filtre les noeuds pour obtenir ceux qui sont contenus dans assignation_edges
+            for i, edge in enumerate(path):
+                # S'il est dans assignation_edges, on parcours la fin du chemin pour voir si la variable qui
+                # a reçu une assignation est utilisée
+                if edge in assignation_edges.values() and len(path)>i:
+                    for ass_variable, ass_edge in assignation_edges.items():
+                        if edge==ass_edge:
+                            var = ass_variable
+                    end_of_path = path[i+1:]
+                    for edge_to_end in end_of_path:
+                        edge_data = program.program_graph.get_edge_data(*edge_to_end)["attr_dict"]
+                        instr = edge_data["instr"]
+                        expr = edge_data["expr"]
+                        used_vars = instr.variables() + expr.variables()
+                        if var in used_vars:
+                            assignation_edges.pop(var, None)
         if len(assignation_edges)==0:
             print("Test Tdef passed")
         else:
