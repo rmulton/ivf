@@ -74,12 +74,16 @@ class And:
     """
     Permet de composer deux booléens selon l'opérateur And
     """
-    def __init__(self, bool1, bool2):
+    def __init__(self, bool1, bool2, no=False):
         super().__init__()
         self.bool1 = bool1
         self.bool2 = bool2
+        self.no = no
     def result(self):
-        return (self.bool1.result() and self.bool2.result())
+        if not self.no:
+            return (self.bool1.result() and self.bool2.result())
+        else:
+            return not (self.bool1.result() and self.bool2.result())
     def variables(self):
         return self.bool1.variables() + self.bool2.variables()
     def conditions(self):
@@ -89,13 +93,17 @@ class Or:
     """
     Permet de composer deux opérateurs booléens selon l'opérateur or
     """
-    def __init__(self, bool1, bool2):
+    def __init__(self, bool1, bool2, no=False):
         super().__init__()
         self.bool1 = bool1
         self.bool2 = bool2
+        self.no = no
 
     def result(self):
-        return (self.bool1.result() or self.bool2.result())
+        if not self.no:
+            return (self.bool1.result() or self.bool2.result())
+        else:
+            return not (self.bool1.result() or self.bool2.result())
     def variables(self):
         return self.bool1.variables() + self.bool2.variables()
     def conditions(self):

@@ -130,7 +130,7 @@ class K_TC:
             # Get the path for the test
             exec_path = program.get_path(test)
             # If the path is in the paths of length inferior or equal to k, remove it
-            for i in range(min(self.k+1, len(exec_path))):
+            for i in range(min(self.k+1, len(exec_path)+1)):
                 i_exec_path = exec_path[:i]
                 if i_exec_path in k_paths:
                     k_paths.remove(i_exec_path)

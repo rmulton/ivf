@@ -1,146 +1,80 @@
 import cover_analyser.test_criteria as tests
 import program.examples as examples
 
+def test_program(pgm_name, pgm, test_set, k=5, i=1):
+    print("=== Tests for {} ===".format(pgm_name))
+    # Test the TA criterion
+    tests.test_ta(test_set, pgm)
+    # Test the TD criterion
+    tests.test_td(test_set, pgm)
+    # Test the KTC criterium
+    tests.test_ktc(test_set, pgm, k)
+    # Test the ITB criterium
+    tests.test_itb(test_set, pgm, i)
+    # Test the TDef criterium
+    tests.test_tdef(test_set, pgm)
+    # Test the TU criterium
+    tests.test_tu(test_set, pgm)
+    # Test the TDU criterium
+    tests.test_tdu(test_set, pgm)
+    # Test the TC criterium
+    tests.test_tc(test_set, pgm)
+    print("=== End of the tests for {} ===\n".format(pgm_name))
+
+
+
 if __name__=="__main__":
     # Create the program that we are going to test
+
+    # Test program 1
     pgm = examples.create_test_program1()
+    pgm_test_set = [ \
+        {"x": -2}, \
+        {"x": -1}, \
+        {"x": 0}, \
+        {"x": 1}, \
+        {"x": 2}, \
+        {"x": 5} \
+        ]
+    test_program("First program", pgm, pgm_test_set, k=4)
+
+    # Test program While
     pgm_while = examples.create_test_program2()
-    pgm_while_2 = examples.create_test_program3()
-    pgm_3var = examples.create_test_program4()
-    pgm_3var_2 = examples.create_test_program5()
+    pgm_while_test_set = [ \
+        {"x": -2}, \
+        {"x": -1}, \
+        {"x": 0}, \
+        {"x": 1}, \
+        {"x": 2}, \
+        {"x": 5} \
+        ]
+    test_program("Program while", pgm_while, pgm_while_test_set)
+    
 
-    ######################
-    ### Test program 1 ###
-    ######################
+    # Test prog with 3 var
+    pgm4_test_set = [ \
+        {"x": -2, "y":3, "z":5}, \
+        {"x": -1, "y":1, "z":0} \
+        ]
+    pgm4 = examples.create_test_program4()
+    test_program("Program 3 variables v1", pgm4, pgm4_test_set)
 
-    print("=== First program ===")
-    # Test the TA criterion
-    ta_test_set = [{"x": 0},{"x": -1},{"x": 1}]
-    tests.test_ta(ta_test_set, pgm)
-
-    # Test the TD criterion
-    td_test_set = [{"x": 0}]
-    tests.test_td(td_test_set, pgm)
-
-    # Test the KTC criterium
-    ktc_test_set = [{"x": 0}, {"x": 5}]
-    tests.test_ktc(ktc_test_set, pgm, 2)
-
-    # Test the TDef criterium
-    test_set = [{"x": 0}, {"x": 5}, {"x": -1}]
-    tests.test_tdef(test_set, pgm)
-
-    # Test the TC criterium
-    tc_test_set = [{"x": 0}, {"x": 5}, {"x": -1}]
-    tests.test_tc(tc_test_set, pgm)
-
-    # Test the ITB criterium
-    itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_itb(itb_tests_set, pgm ,1)
-
-    # Test the TU criterium
-    tu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_tu(tu_test_set, pgm)
-
-    # Test the TDU criterium
-    tdu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_tdu(tu_test_set, pgm)
-
-    # Test the TC criterium
-    tc_test_set = [{"x": -2}, {"x": 3}, {"x": -1}]
-    tests.test_tc(tc_test_set, pgm)
-
-    print("=== End for first program ===")
-
-    ##########################
-    ### Test program While ###
-    ##########################
-
-    print("=== While program ===")
-
-    # Test the TA criterion
-    ta_test_set = [{"x": 0},{"x": -1},{"x": 1}]
-    tests.test_ta(ta_test_set, pgm_while_2)
-
-    # Test the TD criterion
-    td_test_set = [{"x": 0}]
-    tests.test_td(td_test_set, pgm_while_2)
-
-    # Test the KTC criterium
-    ktc_test_set = [{"x": 0}, {"x": 5}]
-    tests.test_ktc(ktc_test_set, pgm_while_2, 2)
-
-    # Test the ITB criterium
-    itb_tests_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_itb(itb_tests_set, pgm_while_2, 1)
-
-    # Test the TDef criterium
-    test_set = [{"x": 0}, {"x": 5}, {"x": -1}]
-    tests.test_tdef(test_set, pgm_while_2)
-
-
-    # Test the TU criterium
-    tu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_tu(tu_test_set, pgm_while_2)
-
-    # Test the TDU criterium
-    tdu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
-    tests.test_tdu(tu_test_set, pgm_while_2)
-
-    # Test the TC criterium
-    tc_test_set = [{"x": 0}, {"x": 5}, {"x": -1}]
-    tests.test_tc(tc_test_set, pgm_while_2)
-
-    print("=== End of While program ===")
-
-    ############################
-    ### Test prog with 3 var ###
-    ############################
-
-    print("=== 3 variables program ===")
-
-    # Test the ITB criterium
-    itb_tests_set = [{"x": -2, "y":3, "z":5},{"x": -1, "y":1, "z":0}]
-    tests.test_itb(itb_tests_set, pgm_3var, 1)
-
-    print("=== End of 3 variables program ===")
-
-    ############################
-    ### Test prog with 3 var ###
-    ############################
-
-    print("=== 3 variables program 2 ===")
-
-    # # Test the TA criterion
-    ta_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
-    tests.test_ta(ta_test_set, pgm)
-
-    # # Test the TD criterion
-    td_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
-    tests.test_td(td_test_set, pgm)
-
-    # # Test the KTC criterium
-    ktc_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
-    tests.test_ktc(ktc_test_set, pgm, 2)
-
-    # # Test the ITB criterium
-    itb_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
-    tests.test_itb(itb_test_set, pgm_3var, 1)
-
-    # # Test the TDef criterium
-    tdef_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
-    tests.test_tdef(tdef_test_set, pgm)
-
-    # Test the TU criterium
-    tu_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0},{"x": 4, "y":1, "z":0}]
-    tests.test_tu(tu_test_set, pgm_3var_2)
-
-    # Test the TDU criterium
-    tdu_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0},{"x": 3, "y":1, "z":2}]
-    tests.test_tdu(tdu_test_set, pgm_3var_2)
-
-    # # Test the TC criterium
-    tc_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
-    tests.test_tc(tc_test_set, pgm)
-
-    print("=== End of 3 variables program 2 ===")
+    # Test prog with 3 var
+    pgm5_test_set = [ \
+        # Straight to the finale node
+        ## Through 2
+        {"x": -2, "y":1, "z":2}, \
+        {"x": -2, "y":0, "z":-1}, \
+        ## Through 3
+        {"x": 1, "y":1, "z":2}, \
+        {"x": 1, "y":2, "z":-1}, \
+        # One loop
+        ## Through 2
+        {"x": -2, "y":0, "z":2}, \
+        {"x": -2, "y":0, "z":5}, \
+        ## Through 3
+        {"x": 5, "y":2, "z":2}, \
+        {"x": 5, "y":2, "z":5}
+        ]
+    pgm5 = examples.create_test_program5()
+    test_program("Program 3 variables v2", pgm5, pgm5_test_set, k=5)
