@@ -161,29 +161,29 @@ class Program:
         # (path,index of edge of definition in path, index of edge of use in path)
 
         result = []
-        # Because of while loops, we have an infinity of paths. We decide to take paths where length < 20
-        for k in range(20):
-            #Take only paths that finish
-            paths = self.get_k_paths_finished(k)
-            #Browse those paths
-            for path in paths:
-                for i, edge in enumerate(path):
-                    data = self.program_graph.get_edge_data(edge[0], edge[1])
-                    attr_dict = data["attr_dict"]
-                    #Definition is an assign or initial state
-                    if isinstance(attr_dict['instr'],Assign) or i== 0:
-                        #Browsing the end of the path to look for an assign or a use of the variable
-                        for j in range(i+1,len(path)):
-                            data_temp = self.program_graph.get_edge_data(path[j][0], path[j][1])
-                            attr_dict_temp = data_temp["attr_dict"]
-                            # There is another assign so we are not interested by this path
-                            if isinstance(attr_dict_temp['instr'],Assign):
+        # Because of while loops, we have an infinity of paths. But in term of how we use the variables, it
+        # is equivalent to use only one while loop or several. So we use only 1 loop.
+        #Take only paths that finish
+        paths = self.get_k_paths_finished(1)
+        #Browse those paths
+        for path in paths:
+            for i, edge in enumerate(path):
+                data = self.program_graph.get_edge_data(edge[0], edge[1])
+                attr_dict = data["attr_dict"]
+                #Definition is an assign or initial state
+                if isinstance(attr_dict['instr'],Assign) or i== 0:
+                    #Browsing the end of the path to look for an assign or a use of the variable
+                    for j in range(i+1,len(path)):
+                        data_temp = self.program_graph.get_edge_data(path[j][0], path[j][1])
+                        attr_dict_temp = data_temp["attr_dict"]
+                        # There is another assign so we are not interested by this path
+                        if isinstance(attr_dict_temp['instr'],Assign):
+                            break
+                        # There is a use of the variable so we take it
+                        elif isinstance(attr_dict_temp['expr'],InfOrEqual) or isinstance(attr_dict_temp['expr'],Equal):
+                            if (path,i,j) not in result:
+                                result.append((path,i,j))
                                 break
-                            # There is a use of the variable so we take it
-                            elif isinstance(attr_dict_temp['expr'],InfOrEqual) or isinstance(attr_dict_temp['expr'],Equal):
-                                if (path,i,j) not in result:
-                                    result.append((path,i,j))
-                                    break
         return result
 
     def get_DU_paths(self):

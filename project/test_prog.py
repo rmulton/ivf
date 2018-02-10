@@ -6,6 +6,8 @@ if __name__=="__main__":
     pgm = examples.create_test_program1()
     pgm_while = examples.create_test_program2()
     pgm_while_2 = examples.create_test_program3()
+    pgm_3var = examples.create_test_program4()
+    pgm_3var_2 = examples.create_test_program5()
 
     ######################
     ### Test program 1 ###
@@ -43,6 +45,10 @@ if __name__=="__main__":
     # Test the TDU criterium
     tdu_test_set = [{"x": -2},{"x": -1},{"x": 5}]
     tests.test_tdu(tu_test_set, pgm)
+
+    # Test the TC criterium
+    tc_test_set = [{"x": -2}, {"x": 3}, {"x": -1}]
+    tests.test_tc(tc_test_set, pgm)
 
     print("=== End for first program ===")
 
@@ -87,3 +93,54 @@ if __name__=="__main__":
 
     print("=== End of While program ===")
 
+    ############################
+    ### Test prog with 3 var ###
+    ############################
+
+    print("=== 3 variables program ===")
+
+    # Test the ITB criterium
+    itb_tests_set = [{"x": -2, "y":3, "z":5},{"x": -1, "y":1, "z":0}]
+    tests.test_itb(itb_tests_set, pgm_3var, 1)
+
+    print("=== End of 3 variables program ===")
+
+    ############################
+    ### Test prog with 3 var ###
+    ############################
+
+    print("=== 3 variables program 2 ===")
+
+    # # Test the TA criterion
+    ta_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
+    tests.test_ta(ta_test_set, pgm)
+
+    # # Test the TD criterion
+    td_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
+    tests.test_td(td_test_set, pgm)
+
+    # # Test the KTC criterium
+    ktc_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
+    tests.test_ktc(ktc_test_set, pgm, 2)
+
+    # # Test the ITB criterium
+    itb_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
+    tests.test_itb(itb_test_set, pgm_3var, 1)
+
+    # # Test the TDef criterium
+    tdef_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
+    tests.test_tdef(tdef_test_set, pgm)
+
+    # Test the TU criterium
+    tu_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0},{"x": 4, "y":1, "z":0}]
+    tests.test_tu(tu_test_set, pgm_3var_2)
+
+    # Test the TDU criterium
+    tdu_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0},{"x": 3, "y":1, "z":2}]
+    tests.test_tdu(tdu_test_set, pgm_3var_2)
+
+    # # Test the TC criterium
+    tc_test_set = [{"x": -2, "y":3, "z":2},{"x": 3, "y":3, "z":2},{"x": -1, "y":1, "z":0}]
+    tests.test_tc(tc_test_set, pgm)
+
+    print("=== End of 3 variables program 2 ===")
